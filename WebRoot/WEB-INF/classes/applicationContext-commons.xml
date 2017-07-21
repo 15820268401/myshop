@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="datasource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/shop</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>root</value>
+		</property>
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="datasource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>emp/shop/model/User.hbm.xml</value>
+				<value>emp/shop/model/Orders.hbm.xml</value>
+				<value>emp/shop/model/PayType.hbm.xml</value>
+				<value>emp/shop/model/OrderItem.hbm.xml</value>
+				<value>emp/shop/model/Product.hbm.xml</value>
+				<value>emp/shop/model/ProductType.hbm.xml</value>
+				<value>emp/shop/model/SiteHit.hbm.xml</value>
+				<value>emp/shop/model/Manager.hbm.xml</value>
+				<value>emp/shop/model/Advice.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- ************************以下代码为对用户操作的事务处理*********************** -->
+
+	<bean id="userDaoImpl"
+		class="emp.shop.dao.UserDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="userDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="userDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>
+	
+		<!-- ************************以下代码为对产品操作的事务处理*********************** -->
+
+	<bean id="productDaoImpl"
+		class="emp.shop.dao.ProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="productDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="productDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+		<!-- ************************以下代码为对付款方式操作的事务处理*********************** -->
+
+	<bean id="payTypeDaoImpl"
+		class="emp.shop.dao.PayTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="payTypeDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="payTypeDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>
+	
+		<!-- ************************以下代码为对订单操作的事务处理*********************** -->
+
+	<bean id="orderDaoImpl"
+		class="emp.shop.dao.OrderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="orderDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="orderDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+	
+	
+		<!-- ************************以下代码为对订单项操作的事务处理*********************** -->
+
+	<bean id="orderItemDaoImpl"
+		class="emp.shop.dao.OrderItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="orderItemDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="orderItemDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+	
+			<!-- ************************以下代码为对商品类型操作的事务处理*********************** -->
+
+	<bean id="productTypeDaoImpl"
+		class="emp.shop.dao.ProductTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="productTypeDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="productTypeDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<!-- ************************以下代码为对商品类型操作的事务处理*********************** -->
+
+	<bean id="siteHitDaoImpl"
+		class="emp.shop.dao.SiteHitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="siteHitDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="siteHitDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<!-- ************************以下代码为对管理员操作的事务处理*********************** -->
+
+	<bean id="managerDaoImpl"
+		class="emp.shop.dao.ManagerDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="managerDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="managerDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+	
+		<!-- ************************以下代码为对投诉操作的事务处理*********************** -->
+
+	<bean id="adviceDaoImpl"
+		class="emp.shop.dao.AdviceDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+
+	<bean id="adviceDaoProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="target">
+			<ref local="adviceDaoImpl" />
+		</property>
+
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*"></prop>
+				<prop key="delete*"></prop>
+				<prop key="modify*"></prop>
+				<prop key="query*"></prop>
+			</props>
+		</property>
+	</bean>	
+</beans>

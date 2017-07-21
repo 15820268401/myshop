@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="emp.shop.model">
+	<class name="User">
+		<id name="user_id">
+			<generator class="native"/>
+		</id>
+		<property name="username"/>
+		<property name="password"/>
+		<property name="truename"/>
+		<property name="certificate_type"/>
+		<property name="certificate_num"/>
+		<property name="sex"/>
+		<property name="address"/>
+		<property name="tel"/>
+		<property name="zip"/>
+		<property name="email"/>
+		<property name="password_hint"/>
+		<property name="password_result"/>
+		<property name="card_level"/>
+		<property name="member_score"/>
+		
+		<set name="order">
+			<key column="user_id"/>
+			<one-to-many class="Orders"/>
+		</set>
+		
+		<set name="advice">
+			<key column="userid"/>
+			<one-to-many class="Advice"/>
+		</set>
+		
+	</class>
+</hibernate-mapping>

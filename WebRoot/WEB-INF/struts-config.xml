@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+  
+  		<!-- 用户form -->
+  		<form-bean name="userForm" type="emp.shop.form.UserForm"/>
+  		
+  		<!-- 用户form -->
+  		<form-bean name="userForm2" type="emp.shop.form.UserForm2"/>
+  		
+  		<!-- 购物车form -->
+  		<form-bean name="shoppingcartFormMulti" type="emp.shop.form.ShoppingCartFormMulti"/>
+  		
+  		<!-- 付款方式form -->
+  		<form-bean name="payTypeForm" type="emp.shop.form.PayTypeForm"/>
+  		
+  		<!-- 备注form -->
+  		<form-bean name="bakForm" type="emp.shop.form.BakForm"/>
+  		
+  		<!-- 商品form -->
+  		<form-bean name="productForm" type="emp.shop.form.ProductForm"/>
+  		
+  		<!-- 商品类型form -->
+  		<form-bean name="productTypeForm" type="emp.shop.form.ProductTypeForm"/>
+  		
+  		<!-- 搜索form -->
+  		<form-bean name="searchForm" type="emp.shop.form.SearchForm"/>
+  		
+  		<!-- 管理员form -->
+  		<form-bean name="managerForm" type="emp.shop.form.ManagerForm"/>
+  		
+  		<!-- 图片上传form -->
+  		<form-bean name="uploadForm" type="emp.shop.form.UploadForm"/>
+  		
+  		<!-- 后台添加商品form -->
+  		<form-bean name="addProductForm" type="emp.shop.form.AddProductForm"/>
+  		
+  		<!-- 订单form -->
+  		<form-bean name="orderForm" type="emp.shop.form.OrderForm"/>
+  		
+  		<!-- 意见form -->
+  		<form-bean name="adviceForm" type="emp.shop.form.AdviceForm"/>
+  		
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+	 
+	   <!-- 首页向注册页面跳转action -->
+	   <action path="/torigiste" forward="/register.jsp"/>
+	   
+	   <!-- 普通用户注册处理action -->
+	   <action path="/registing" 
+	   		   name="userForm2" 
+	   		   type="emp.shop.action.UserAction"
+	   		   scope="request"
+	   		   input="/register.jsp">
+	   	<forward name="success" path="/login.jsp"></forward>
+	   </action>
+	   
+	   <!-- 用户登录处理action -->
+	   <action path="/logining" 
+	   		   name="userForm"
+	   		   type="emp.shop.action.LoginAction"
+	   		   scope="request">
+	   	<forward name="success" path="/logined_index.jsp"/>
+	   	<forward name="failure" path="/failure_login.jsp"/>
+	   </action>
+	   
+	   <!-- 产品展示action -->
+	   <action path="/showAll" 
+	   		   type="emp.shop.action.ProductAction"
+	   		   scope="request">
+	   	<forward name="success" path="/all_product.jsp"></forward>
+	   </action>
+	   
+	   <!-- 商品详细信息action -->
+	   <action path="/product_detail"
+	   		   name="productForm"
+	   		   type="emp.shop.action.ProductDetailAction"
+	   		   scope="request">
+	   	<forward name="success" path="/product_detail.jsp"></forward>
+	   </action>
+	   
+	   <!-- 购物车action -->
+	   <action path="/buy" 
+	   		   type="emp.shop.action.ShppingCartAction"
+	   		   scope="request"
+	   		   parameter="method">
+	   	<forward name="add_success" path="/shoppingcart.jsp"/>
+	   </action>
+	   
+	   <!-- 确认订单action -->
+	   <action path="/buying"
+	   		   type="emp.shop.action.SureCartAction"
+	   		   name="shoppingcartFormMulti"
+	   		   scope="request">
+	   	<forward name="success" path="/sure_cart.jsp"/>
+	   </action>
+	   
+	   <!-- 用户信息跳转action -->
+	   <action path="/order_detail"
+	   		   forward="/user_detail.jsp">
+	   </action>
+	   
+	   <!-- 付款方式跳转action -->
+	   <action path="/user_detail"
+	   		   type="emp.shop.action.PayTypeAction"
+	   		   name="bakForm"
+	   		   scope="session">
+	   	<forward name="success" path="/pay_type.jsp"/>
+	   </action>
+	   
+	   <!-- 订单显示action -->
+	   <action path="/show_order"
+	   		   type="emp.shop.action.SaveAllAction"
+	   		   name="payTypeForm"
+	   		   scope="request">
+	   	<forward name="success" path="/show_order.jsp"/>
+	   </action>
+	   
+	   <!-- 用户订单展示action -->
+	   <action path="/final_show_order"
+	   		   type="emp.shop.action.ShowOrderAction">
+	   	<forward name="success" path="/show_order.jsp"/>
+	   </action>
+	   
+	   <!-- 首页处理action -->
+	   <action path="/index"
+	   		   type="emp.shop.action.GoIndexAction"
+	   		   scope="request">
+	   	<forward name="go_success" path="/index.jsp"/>		   
+	   </action>
+	   
+	   <!-- 按照产品的类型id查询到所有产品-->
+		<action path="/product_detail_by_type"
+				name="productTypeForm"
+				type="emp.shop.action.ProductByTypeAction"
+				scope="request">
+		  <forward name="success" path="/product_list.jsp"/>
+		</action>
+		
+		<!-- 修改个人信息action -->
+		<action path="/modify"
+				type="emp.shop.action.ModifyInfoAction"
+				scope="request">
+		   <forward name="success" path="/modify_info.jsp"/>
+		   <forward name="failure" path="/modify_login.jsp"/>		
+		</action>
+		
+		<!-- 正式修改个人信息action -->
+		<action path="/modifying"
+				type="emp.shop.action.UpdateUserAction"
+				name="userForm"
+				scope="request">
+			<forward name="success" path="/modify_success.jsp"/>
+		</action>
+		
+		<!-- 搜索处理action -->
+		<action path="/search"
+				type="emp.shop.action.SearchAction"
+				name="searchForm"
+				scope="request">
+			<forward name="success" path="/search_result.jsp"/>
+		</action>
+		
+		<!-- 进入后台action -->
+		<action path="/go_back_login"
+				forward="/back_login.jsp">
+		</action>
+		
+		<!-- 后台管理员登录action -->
+		<action path="/back_login" 
+				type="emp.shop.action.BackLoginAction"
+				name="managerForm"
+				scope="request">
+			<forward name="success" path="/back_index.jsp"/>
+			<forward name="order_admin" path="/back_index_order.jsp"/>
+			<forward name="product_admin" path="/back_index_product.jsp"/>
+			<forward name="user_admin" path="/back_index_user.jsp"/>
+			<forward name="pay_type_admin" path="/back_index_pay_type.jsp"/>
+			<forward name="product_type_admin" path="/back_index_product_type.jsp"/>
+			<forward name="failure" path="/fail_back_login.jsp"/>
+		</action>
+		
+		<!-- 图片上传action -->
+		<action path="/upload"
+				type="emp.shop.action.UploadAction"
+				name="uploadForm"
+				scope="request">
+			<forward name="success" path="/back_add_product.jsp"/>		
+		</action>
+		
+		<!-- 添加图片action -->
+		<action path="/back_addPicture"
+				forward="/back_addPicture.jsp"/>
+		
+		<!-- 后台添加商品action -->
+		<action path="/back_addProduct"
+				name="addProductForm"
+				type="emp.shop.action.AddProductAction"
+				scope="request">
+			<forward name="success" path="/back_add_product_success.jsp"/>
+		</action>
+		
+		<!-- 后台查看商品的详细信息action -->
+		<action path="/searchDetail"
+				type="emp.shop.action.BackProductDetailAction"
+				name="productForm"
+				scope="request">
+			<forward name="success" path="/back_product_detail.jsp"/>		
+		</action>
+		
+		<!-- 修改商品跳转action -->
+		<action path="/modifyProduct"
+				type="emp.shop.action.BackModifyProductAction"
+				name="productForm"
+				scope="request">
+			<forward name="success" path="/back_modifyProduct.jsp"/>		
+		</action>
+		
+		<!-- 修改图片跳转action -->
+		<action path="/back_modifyPicture"
+				forward="/back_modifyPicture.jsp">
+		</action>
+		
+		<!--修改图片action  -->
+		<action path="/modify_picture"
+				type="emp.shop.action.UploadAction"
+				name="uploadForm"
+				scope="request">
+			<forward name="success" path="/back_modify_product2.jsp"/>		
+	   </action>
+	   
+	   <!--修改商品action  -->
+	   <action path="/modifyingProduct"
+	   		   type="emp.shop.action.BackUpdateProductAction"
+	   		   name="addProductForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_modify_product_success.jsp"/>
+	   </action>
+	   
+	   <!-- 删除商品action -->
+	   <action path="/deleteProduct"
+	   		   type="emp.shop.action.DelectProductAction"
+	   		   name="productForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_modify_product.jsp"/>
+	   	</action>
+	   	
+	   	<!-- 用户操作action -->
+	   	<action path="/userManager"
+	   			type="emp.shop.action.UserListAction"
+	   			scope="request">
+	   		<forward name="success" path="/back_user_list.jsp"/>
+	   	</action>
+	   	
+	   	<!-- 查看用户详细信息action -->
+	   	<action path="/searchUserDetail"
+	   			type="emp.shop.action.UserDetailAction"
+	   			name="userForm"
+	   			scope="request">
+	   		<forward name="success" path="/back_user_detail.jsp"/>	
+	   	</action>
+	   	
+	   	<!-- 删除用户action -->
+	   	<action path="/deleteUser"
+	   			type="emp.shop.action.DeleteUserAction"
+	   			name="userForm"
+	   			scope="request">
+	   		<forward name="success" path="/userManager.do"/>		
+	   	</action>
+	   	
+	   	<!-- 添加管理员跳转action -->
+	   	<action path="/back_addManager"
+	   			forward="/back_add_manager.jsp">
+	   	</action>
+	   	
+	   	<!-- 添加管理员action -->
+	   	<action path="/back_adding_manager"
+	   			type="emp.shop.action.BackAddManagerAction"
+	   			name="managerForm"
+	   			scope="request">
+	   		<forward name="success" path="/back_addManager_success.jsp"/>
+	   	</action>
+	   	
+	   	<!-- 修改管理员展现action -->
+		<action path="/back_modifyManager"
+				type="emp.shop.action.BackModifyMagAction"
+				scope="request">
+			<forward name="success" path="/back_modify_manager.jsp"/>		
+		</action>
+	   
+	   <!-- 修改管理员action -->
+	   <action path="/modifyManagerDetail"
+	   		   type="emp.shop.action.BackModifyMagDetailAction"
+	   		   name="managerForm"
+	   		   scope="request">
+	   		<forward name="success" path="/bakc_modifyMag.jsp"/>		   
+	   </action>
+	   
+	   <!-- 更新管理员action -->
+	   <action path="/back_modifying_manager"
+	   		   type="emp.shop.action.BackUpdateMagAction"
+	   		   name="managerForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_modifyMag_success.jsp"/>		   
+	   </action>
+	   
+	   <!-- 删除管理员action-->
+	   <action path="/deleteManager"
+	   		   type="emp.shop.action.BackDelMagAction"
+	   		   name="managerForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_modifyManager.do"/>		   
+	   </action>
+	   
+	   <!-- go修改付款方式action -->
+	   <action path="/go_modifyPayType"
+	   		   type="emp.shop.action.BackPayTypeListAction"
+	   		   scope="request">
+	   		<forward name="success" path="/back_payTypeList.jsp"/>		   
+	   </action>
+	   
+	   <!-- 修改付款方式action -->
+	   <action path="/go_modifyPayTypeDetail"
+	   		   type="emp.shop.action.BackModifyPTAction"
+	   		   name="payTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_payType_detail.jsp"/>		   
+	   </action>
+	   
+	   <!-- 更新确认付款方式action -->
+	   <action path="/update_pay_type"
+	   		   type="emp.shop.action.BackUpdatePTAction"
+	   		   name="payTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_update_payType_success.jsp"/>		   
+	   </action>
+	   
+	   <!-- 删除付款方式action -->
+	   <action path="/deletePayType"
+	   		   type="emp.shop.action.DelPayTypeAction"
+	   		   name="payTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/go_modifyPayType.do"/>		   
+	   </action>
+	   
+	   <!-- 进入添加付款方式action -->
+	   <action path="/go_addPayType"
+	   		   forward="/back_add_payType.jsp">
+	   </action>
+	   
+	   <!-- 添加付款方式action -->
+	   <action path="/add_pay_type"
+	 		   type="emp.shop.action.BackAddPTAction"
+	 		   name="payTypeForm"
+	 		   scope="request">
+	  		<forward name="success" path="/go_modifyPayType.do"/>
+	   </action>
+	   
+	   <!-- 进入产品类型列表action -->
+	   <action path="/go_modifyProductType"
+	   		   type="emp.shop.action.BackProductTypeListAction"
+	   		   scope="request">
+	   		<forward name="success" path="/back_productType_list.jsp"/>
+	   </action>
+	   
+	   <!-- 修改产品类型action -->
+	   <action path="/go_modifyProductTypeDetail"
+	   		   type="emp.shop.action.ModifyProductType"
+	   		   name="productTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_modifying_productType.jsp"/>		   
+	   </action>
+	   
+	   <!-- 保存产品类型修改action -->
+	   <action path="/update_product_type"
+	   		   type="emp.shop.action.UpdateProductType"
+	   		   name="productTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/go_modifyProductType.do"/>		   
+	   </action>
+	   
+	   <!-- 删除产品类型action -->
+	   <action path="/deleteProductType"
+	   		   type="emp.shop.action.DelProductTypeAction"
+	   		   name="productTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/go_modifyProductType.do"/>		   
+	   </action>
+	   
+	   <!-- 添加产品类型跳转action -->
+	   <action path="/go_addProductType"
+	   		   forward="/back_add_productType.jsp">
+	   </action>
+	   
+	   <!--添加产品类型action  -->
+	   <action path="/add_product_type"
+	   		   type="emp.shop.action.AddProductTypeAction"
+	   		   name="productTypeForm"
+	   		   scope="request">
+	   		<forward name="success" path="/go_modifyProductType.do"/>   
+	   </action>
+	   
+	   <!-- 进入后台订单项页面action -->
+	   <action path="/go_edit_orderItem"
+	   		   type="emp.shop.action.EditOrderItemAction"
+	   		   scope="request">
+	   		<forward name="success" path="/back_edit_orderItem.jsp"/>
+	   </action>
+	   
+	   <!-- 有订单查询商品action -->
+	   <action path="/go_queryProductDetail"
+	   		   type="emp.shop.action.ProductDetailAction"
+	   		   name="productForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_product_detail_via_oi.jsp"/>   
+	   </action>
+	   
+	   <!-- 由订单项查询订单action -->
+	   <action path="/go_queryOrderDetail"
+	   		   type="emp.shop.action.BackOrderDetailAction"
+	   		   name="orderForm"
+	   		   scope="request">
+	   		<forward name="success" path="/back_order_detail.jsp"/>		   
+	   </action>
+	   
+	   <!-- 进入投诉页面action -->
+	   <action path="/advice"
+	   		   type="emp.shop.action.AdviceAction"
+	   		   scope="request">
+	   		<forward name="success" path="/advicing.jsp"/>	
+	   		<forward name="failure" path="/advice_failure.jsp"/>	   
+	   </action>
+	   
+	   <!-- 意见处理action -->
+	   <action path="/advicing"
+	   		   type="emp.shop.action.AdvicingAction"
+	   		   name="adviceForm"
+	   		   scope="request">
+	   		<forward name="success" path="/addAdvice_success.jsp"/>			   
+	   </action>
+	   
+	   <!-- 关于页面跳转action -->
+	   <action path="/about.do"
+	   		   forward="/about.jsp">
+	   </action>
+	   
+	   <!-- index页国际化action -->
+	   <action path="/langChange"
+	   		   type="emp.shop.action.LanguageAction"
+	   		   scope="request">
+	   		<forward name="success" path="/index.do"></forward>		   
+	   </action>
+	   
+	   <!-- 忘记密码跳转action -->
+	   <action path="/help"
+	   		   forward="/help.jsp">
+	   </action>
+	   
+	   <!-- 回答问题action -->
+	   <action path="/fill_name"
+	           type="emp.shop.action.QueryHintAction"
+	           name="userForm"
+	           scope="request">
+	        <forward name="success" path="/show_password.jsp"/>   
+       </action>
+       
+       <!-- 查询结果action -->
+       <action path="/query_result"
+       		   type="emp.shop.action.ShowResultAction"
+       		   name="userForm"
+       		   scope="request">
+       		<forward name="success" path="/showing_password.jsp"/>		
+       		<forward name="failure" path="/show_password_error.jsp"/>   
+       </action>
+	   		   
+  </action-mappings>
+  <message-resources parameter="emp.shop.resource.ApplicationResources_zh_CN" />
+  
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+  </plug-in>
+  
+</struts-config>
+

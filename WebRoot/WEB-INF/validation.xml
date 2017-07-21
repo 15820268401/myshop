@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<formset>
+		<form name="">
+			<field property="username" depends="required">
+				<arg key="user.name"/>
+			</field>
+			<field property="email" depends="email,required">
+				<arg0 key="user.email"/>
+			</field>
+			<field property="password1" depends="required">
+				<arg0 key="user.password1"/>
+			</field>
+			<field property="password2" depends="required">
+				<arg0 key="user.password1"/>
+			</field>
+			<field property="truename" depends="required">
+				<arg0 key="user.truename"/>
+			</field>
+			<field property="certificate_type" depends="required">
+				<arg0 key="user.cardType"/>
+			</field>
+			<field property="certificate_num" depends="required">
+				<arg0 key="user.cardno"/>
+			</field>
+			<field property="sex" depends="required">
+				<arg0 key="user.sex"/>
+			</field>
+			<field property="address" depends="required">
+				<arg0 key="user.address"/>
+			</field>
+			<field property="tel" depends="required">
+				<arg0 key="user.tel"/>
+			</field>
+			<field property="zip" depends="required">
+				<arg0 key="user.zip"/>
+			</field>
+			<field property="password_hint" depends="required">
+				<arg0 key="user.password_hint"/>
+			</field>
+			<field property="password_result" depends="required">
+				<arg0 key="user.password_result"/>
+			</field>
+		</form>
+	</formset>
+</form-validation>

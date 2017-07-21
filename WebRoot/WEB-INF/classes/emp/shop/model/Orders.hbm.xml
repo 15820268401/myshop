@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="emp.shop.model">
+	<class name="Orders">
+		<id name="order_id">
+			<generator class="native"/>
+		</id>
+		<property name="order_num"/>
+		<property name="send_place"/>
+		<property name="order_time"/>
+		<property name="order_status"/>
+		<property name="send_man"/>
+		<property name="send_zip"/>
+		<property name="send_phone"/>
+		<property name="send_email"/>
+		<property name="bak"/>
+		
+		<many-to-one name="user" column="user_id"/>
+		
+		<many-to-one name="payType" column="pay_type_id"/>
+		
+		<set name="orderItem">
+			<key column="order_id"/>
+			<one-to-many class="OrderItem"/>
+		</set>
+		
+	</class>
+</hibernate-mapping>

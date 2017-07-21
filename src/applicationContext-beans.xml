@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="user" class="emp.shop.model.User"/>
+	
+	<bean id="product" class="emp.shop.model.Product"/>
+	
+	<bean id="shoppingCartBean" class="emp.shop.bean.ShoppingCartBean" singleton="false"/>
+	
+	<bean id="order" class="emp.shop.model.Orders"/>
+	
+	<bean id="payType" class="emp.shop.model.PayType"/>
+	
+	<bean id="orderItem" class="emp.shop.model.OrderItem"/>
+	
+	<bean id="productType" class="emp.shop.model.ProductType"/>
+	
+	<bean id="siteHit" class="emp.shop.model.SiteHit"/>
+	
+	<bean id="manager" class="emp.shop.model.Manager"/>
+	
+	<bean id="advice" class="emp.shop.model.Advice"/>
+	
+</beans>
