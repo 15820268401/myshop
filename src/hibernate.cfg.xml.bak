@@ -30,6 +30,7 @@
 	<mapping resource="emp/shop/model/SiteHit.hbm.xml" />
 	<mapping resource="emp/shop/model/Manager.hbm.xml" />
 	<mapping resource="emp/shop/model/Advice.hbm.xml" />
+
 </session-factory>
 
 </hibernate-configuration>
